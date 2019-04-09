@@ -78,6 +78,8 @@ export default {
       var realWidth = (this.$el.offsetWidth / (this.contentWidth + 1)) * 100
       if (el.offsetWidth === 0 && realWidth < 100) {
         el.style.width = `${realWidth}%`
+      } else if (realWidth >= 100) {
+        el.style.width = 0
       }
     }
   }
