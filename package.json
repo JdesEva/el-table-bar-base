@@ -1,0 +1,52 @@
+{
+  "name": "el-table-bar",
+  "version": "1.0.8",
+  "private": false,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name ElTableBar --dest lib packages/index.js"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "element-ui": "2.5.4",
+    "vue": "^2.6.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-component": "^1.1.1",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "description": "scrollbar of element-ui el-table",
+  "main": "lib/ElTableBar.common.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JdesHZ/el-table-bar.git"
+  },
+  "author": "Jdeshz <zjmqydes@163.com>",
+  "license": "MIT",
+  "keywords": [
+    "element-ui",
+    "el-table",
+    "el-scrollbar"
+  ],
+  "bugs": {
+    "url": "https://github.com/JdesHZ/el-table-bar/issues"
+  },
+  "homepage": "https://github.com/JdesHZ/el-table-bar#readme",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  }
+}

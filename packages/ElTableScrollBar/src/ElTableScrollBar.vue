@@ -1,0 +1,91 @@
+<template>
+  <div class="elTableBar" @mouseenter="currentWidth">
+    <el-scrollbar ref="bar" :noresize="false" wrap-class="scrollbar-wrapper">
+      <div
+        :style="`width:${!isScrollBar ? '100%' : (!isIE ? 'fit-content' : contentWidth + 'px')}`"
+      >
+        <slot/>
+      </div>
+    </el-scrollbar>
+  </div>
+</template>
+
+<script>
+/**
+ * element-ui 自定义表格组件
+ * 主要特点 将element-ui的表格横向原生滚动条改动为el-scrollbar
+ *
+ */
+export default {
+  name: 'elTableBar',
+  components: {},
+  filters: {},
+  props: {},
+  data () {
+    return {
+      isScrollBar: false, // 控制width 是否为 fit-content (true -> 开启滚动条)
+      isIE: false, // 是否是IE浏览器
+      contentWidth: 0 // 实际宽度
+    }
+  },
+  computed: {},
+  watch: {},
+  created () {},
+  mounted () {
+    this.$nextTick(() => {
+      // 组件加载完毕则触发页面监听
+      this.currentWidth()
+      this.isAgentIE()
+    })
+  },
+  beforeCreate () {},
+  beforeMount () {},
+  beforeUpdate () {},
+  updated () {},
+  beforeDestroy () {},
+  destroyed () {},
+  activated () {},
+  methods: {
+    /**
+     * 计算表格内容实际宽度,判断时候需要显示滚动条(由fit-content属性控制)
+     */
+    currentWidth () {
+      try {
+        this.contentWidth = this.$slots.default[0].elm.getElementsByClassName(
+          'el-table__header'
+        )[0].offsetWidth
+        this.isScrollBar = this.contentWidth > this.$el.offsetWidth
+        this._initWidth()
+      } catch (err) {
+        throw new Error('The width is computed error!')
+      }
+    },
+    /**
+     * 检测浏览器是否为IE,如果是,则进行兼容性处理(修改属性,进行兼容性处理)
+     */
+    isAgentIE () {
+      if (window.navigator.userAgent.indexOf('Trident') > -1) {
+        this.isIE = true
+      }
+    },
+    /**
+     * 当窗口第一次缩小时(特指通过最大化按钮最大化变为正常状态，即不是手动拖拽改变窗口大小的情况)
+     * el-scrollbar滚动条并不会计算真实宽度所占比，需要手动计算
+     */
+    _initWidth () {
+      var el = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
+        .children[0]
+      var realWidth = (this.$el.offsetWidth / (this.contentWidth + 1)) * 100
+      if (el.offsetWidth === 0 && realWidth < 100) {
+        el.style.width = `${realWidth}%`
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.elTableBar .el-table--scrollable-x .el-table__body-wrapper {
+  overflow-x: hidden;
+}
+</style>
