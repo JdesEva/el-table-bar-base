@@ -2,7 +2,7 @@
   <div class="elTableBar" @mouseenter="currentWidth">
     <el-scrollbar ref="bar" :noresize="false" wrap-class="scrollbar-wrapper">
       <div
-        :style="`width:${!isScrollBar ? '100%' : (!isIE ? 'fit-content' : contentWidth + 'px')}`"
+        :style="`width:${!isScrollBar ? '100%' : (!isRep ? 'fit-content' : contentWidth + 'px')}`"
       >
         <slot/>
       </div>
@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       isScrollBar: false, // 控制width 是否为 fit-content (true -> 开启滚动条)
-      isIE: false, // 是否是IE浏览器
+      isRep: false, // 是否需要兼容
       contentWidth: 0 // 实际宽度
     }
   },
@@ -35,7 +35,8 @@ export default {
     this.$nextTick(() => {
       // 组件加载完毕则触发页面监听
       this.currentWidth()
-      this.isAgentIE()
+      this.isAgent()
+      console.log(window.navigator.userAgent)
     })
   },
   beforeCreate () {},
@@ -61,11 +62,17 @@ export default {
       }
     },
     /**
-     * 检测浏览器是否为IE,如果是,则进行兼容性处理(修改属性,进行兼容性处理)
+     * 检测浏览器是否为IE,Edge,FireFox
+     * 如果是,则进行兼容性处理(修改属性,进行兼容性处理)
      */
-    isAgentIE () {
-      if (window.navigator.userAgent.indexOf('Trident') > -1) {
-        this.isIE = true
+    isAgent () {
+      var userAgent = window.navigator.userAgent.toLowerCase()
+      if (
+        userAgent.indexOf('trident') > -1 ||
+        userAgent.indexOf('edge') > -1 ||
+        userAgent.indexOf('firefox') > -1
+      ) {
+        this.isRep = true
       }
     },
     /**
