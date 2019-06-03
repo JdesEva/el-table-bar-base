@@ -26,13 +26,13 @@ element-ui按需引入
 # You can use Yarn or NPM
 
 ```
-yarn add el-table-bar
+yarn add el-table-bar-base
 ```
 
 #OR
 
 ```
-npm i el-table-bar
+npm i el-table-bar-base
 ```
 
 ## Usage
@@ -40,8 +40,8 @@ npm i el-table-bar
 # main.js
 
 ```
-import ElTableBar from 'el-table-bar'
-import 'el-table-bar/lib/ElTableBar.css'
+import ElTableBar from 'el-table-bar-base'
+import 'el-table-bar-base/lib/ElTableBar.css'
 
 Vue.use(ElTableBar)
 ```
