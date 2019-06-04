@@ -52,7 +52,7 @@
 
 ![image](https://github.com/JdesHZ/el-table-bar-base/blob/master/examples/images/default.png)
 
-#fixed
+# fixed
 
 ![image](https://github.com/JdesHZ/el-table-bar-base/blob/master/examples/images/fixed.png)
 
