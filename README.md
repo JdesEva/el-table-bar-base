@@ -50,13 +50,13 @@
 
 # default
 
-![image](https://github.com/JdesHZ/el-table-bar-base/tree/master/examples/images/default.png)
+![image](https://github.com/JdesHZ/el-table-bar-base/blob/master/examples/images/default.png)
 
 #fixed
 
-![image](https://github.com/JdesHZ/el-table-bar-base/tree/master/examples/images/fixed.png)
+![image](https://github.com/JdesHZ/el-table-bar-base/blob/master/examples/images/fixed.png)
 
-![image](https://github.com/JdesHZ/el-table-bar-base/tree/master/examples/images/fixed2.png)
+![image](https://github.com/JdesHZ/el-table-bar-base/blob/master/examples/images/fixed2.png)
 
 ## Install
 
