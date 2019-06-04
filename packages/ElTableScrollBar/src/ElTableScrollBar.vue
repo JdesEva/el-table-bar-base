@@ -1,6 +1,6 @@
 <template>
-  <div class="elTableBar" @mouseenter="currentWidth">
-    <el-scrollbar ref="bar" :noresize="false" wrap-class="scrollbar-wrapper">
+  <div class="elTableBar" @mouseenter="_map" @mousewheel="fn">
+    <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
       <div
         :style="`width:${!isScrollBar ? '100%' : (!isRep ? 'fit-content' : contentWidth + 'px')}`"
       >
@@ -20,23 +20,60 @@ export default {
   name: 'elTableBar',
   components: {},
   filters: {},
-  props: {},
+  props: {
+    fixed: {
+      // 滚动条适应屏幕滚动，开启此项,则长表格（超出一屏幕）滚动条会默认出现在窗口底部，当表格底部出现在窗口视野，滚动条会复位到表格底部
+      type: Boolean,
+      default: function () {
+        return false
+      }
+    },
+    bottom: {
+      // 开启滚动条自适应之后,自适应滚动条距离窗口底部的距离,默认15
+      type: Number,
+      default: function () {
+        return 15
+      }
+    },
+    delay: {
+      // 滚轮响应延迟,默认300毫秒，建议不做改动，最小值200,最大值1000
+      type: Number,
+      default: function () {
+        return 300
+      }
+    }
+  },
   data () {
     return {
       isScrollBar: false, // 控制width 是否为 fit-content (true -> 开启滚动条)
       isRep: false, // 是否需要兼容
-      contentWidth: 0 // 实际宽度
+      contentWidth: 0, // 实际宽度
+      fn: () => {}, // 辅助函数
+      offsetTop: null, // 顶部距离
+      Height: null, // 宽
+      Width: null, // 高
+      offsetLeft: null, // 左侧距离
+      isBottom: false // 是否到底
     }
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    if (this.fixed) {
+      var delay
+      this.delay >= 200 && this.delay <= 1000
+        ? (delay = this.delay)
+        : (delay = 500)
+      this.fn = this.__Throttle(this._initWheel, delay)
+      delay = null
+    }
+  },
   mounted () {
     this.$nextTick(() => {
       // 组件加载完毕则触发页面监听
       this.currentWidth()
       this.isAgent()
-      console.log(window.navigator.userAgent)
+      this._initFixed()
     })
   },
   beforeCreate () {},
@@ -48,6 +85,23 @@ export default {
   activated () {},
   methods: {
     /**
+     * 辅助函数
+     */
+    _map () {
+      if (this.fixed) {
+        this._initWheel()
+        var el = this.$el
+        this.Width = el.clientWidth
+        this.offsetLeft = this.$refs.bar.$el.offsetLeft
+      }
+      var scroll = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
+        .children[0]
+      scroll.style.width = `${(this.Width / (this.contentWidth + 4)) * 100}%`
+      this._resetStyle()
+      el = null
+      scroll = null
+    },
+    /**
      * 计算表格内容实际宽度,判断时候需要显示滚动条(由fit-content属性控制)
      */
     currentWidth () {
@@ -55,8 +109,7 @@ export default {
         this.contentWidth = this.$slots.default[0].elm.getElementsByClassName(
           'el-table__header'
         )[0].offsetWidth
-        this.isScrollBar = this.contentWidth > this.$el.offsetWidth
-        this._initWidth()
+        this.isScrollBar = this.contentWidth > this.$el.clientWidth
       } catch (err) {
         throw new Error('The width is computed error!')
       }
@@ -74,19 +127,121 @@ export default {
       ) {
         this.isRep = true
       }
+      userAgent = null
     },
     /**
      * 当窗口第一次缩小时(特指通过最大化按钮最大化变为正常状态，即不是手动拖拽改变窗口大小的情况)
      * el-scrollbar滚动条并不会计算真实宽度所占比，需要手动计算
      */
-    _initWidth () {
-      var el = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
-        .children[0]
-      var realWidth = (this.$el.offsetWidth / (this.contentWidth + 1)) * 100
-      if (el.offsetWidth === 0 && realWidth < 100) {
-        el.style.width = `${realWidth}%`
-      } else if (realWidth >= 100) {
-        el.style.width = 0
+    // _initWidth () {
+    //   var el = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
+    //     .children[0]
+    //   var realWidth = (this.$el.offsetWidth / (this.contentWidth + 1)) * 100
+    //   if (el.offsetWidth === 0 && realWidth < 100) {
+    //     el.style.width = `${realWidth}%`
+    //   } else if (realWidth >= 100) {
+    //     el.style.width = 0
+    //   }
+    //   el = null
+    // },
+    /**
+     * 计算相关参数，开启fixed
+     */
+    _initFixed () {
+      if (this.fixed) {
+        var el = this.$slots.default[0].elm
+        this.Width = el.clientWidth
+        this.offsetLeft = this.$refs.bar.$el.offsetLeft
+        this.offsetTop = el.offsetTop
+        this.Height = el.clientHeight
+        el = null
+      }
+    },
+    /**
+     * 监听鼠标滚轮事件
+     */
+    _initWheel (ev) {
+      var window = this.getClientHeight() // 可视区域高度
+      var scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop // 滚动条高度
+      // console.log(
+      //   window + scrollTop,
+      //   this.offsetTop + this.Height,
+      //   window + scrollTop < this.offsetTop + this.Height,
+      //   new Date()
+      // )
+      this.isBottom =
+        (window + scrollTop) * 0.992 < this.offsetTop + this.Height // 0.995 粘滞系数
+      this._resetStyle()
+    },
+    /**
+     * 修改属性
+     */
+    _resetStyle () {
+      var el = this.$refs.bar.$el.getElementsByClassName(
+        'el-scrollbar__bar is-horizontal'
+      )[0]
+      if (this.fixed) {
+        if (this.isBottom) {
+          el.style.width = `${this.Width}px`
+          el.style.position = `fixed`
+          el.style.left = `${this.offsetLeft}px`
+          el.style.bottom = `${this.bottom}px`
+        } else {
+          el.style.width = ``
+          el.style.position = ``
+          el.style.left = ``
+          el.style.bottom = ``
+        }
+      }
+      el = null
+      // console.log(el, this.fixed, this.isBottom)
+    },
+    /**
+     * 获取窗口可视区域高度
+     */
+    getClientHeight () {
+      var clientHeight = 0
+      if (document.body.clientHeight && document.documentElement.clientHeight) {
+        clientHeight =
+          document.body.clientHeight < document.documentElement.clientHeight
+            ? document.body.clientHeight
+            : document.documentElement.clientHeight
+      } else {
+        clientHeight =
+          document.body.clientHeight > document.documentElement.clientHeight
+            ? document.body.clientHeight
+            : document.documentElement.clientHeight
+      }
+      return clientHeight
+    },
+    /**
+     * 节流函数
+     * @param method 事件触发的操作,fn
+     * @param delay 间隔多少毫秒需要触发一次事件
+     * @returns {Function}
+     */
+    __Throttle (method, delay = 500) {
+      let timer
+      let args = arguments
+      let start
+      return function loop () {
+        let self = this
+        let now = Date.now()
+        if (!start) {
+          start = now
+        }
+        if (timer) {
+          clearTimeout(timer)
+        }
+        if (now - start >= delay) {
+          method.apply(self, args)
+          start = now
+        } else {
+          timer = setTimeout(function () {
+            loop.apply(self, args)
+          }, 50)
+        }
       }
     }
   }
