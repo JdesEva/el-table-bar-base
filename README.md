@@ -66,7 +66,7 @@
 yarn add el-table-bar-base
 ```
 
-#OR
+# OR
 
 ```
 npm i el-table-bar-base
