@@ -4,7 +4,7 @@
       <el-col :span="4">左侧占位</el-col>
       <el-col :span="12">
         <el-table-bar fixed>
-          <el-table :data="data" stripe border>
+          <el-table :data="idata" stripe border>
             <el-table-column show-overflow-tooltip label="地址" prop="address"/>
             <el-table-column show-overflow-tooltip label="姓名" prop="name"/>
             <el-table-column show-overflow-tooltip label="日期" prop="date"/>
@@ -20,7 +20,7 @@
       <el-col :span="8">
         <span>如果没有出现横向滚动条，请尝试缩小窗口大小观看例子</span>
         <el-table-bar fixed>
-          <el-table :data="data" stripe border>
+          <el-table :data="idata" stripe border>
             <el-table-column show-overflow-tooltip label="地址" prop="address"/>
             <el-table-column show-overflow-tooltip label="姓名" prop="name"/>
             <el-table-column show-overflow-tooltip label="日期" prop="date"/>
@@ -52,6 +52,7 @@ export default {
   components: {},
   data () {
     return {
+      idata: [],
       data: [
         {
           date: '2016-05-02',
@@ -150,6 +151,13 @@ export default {
         }
       ]
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.idata = this.data
+      }, 3000)
+    })
   }
 }
 </script>

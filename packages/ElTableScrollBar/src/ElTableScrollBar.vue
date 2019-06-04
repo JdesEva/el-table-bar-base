@@ -79,7 +79,9 @@ export default {
   beforeCreate () {},
   beforeMount () {},
   beforeUpdate () {},
-  updated () {},
+  updated () {
+    this._initFixed()
+  },
   beforeDestroy () {},
   destroyed () {},
   activated () {},
