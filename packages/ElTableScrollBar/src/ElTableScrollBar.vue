@@ -61,9 +61,7 @@ export default {
   created () {
     if (this.fixed) {
       var delay
-      this.delay >= 200 && this.delay <= 1000
-        ? (delay = this.delay)
-        : (delay = 500)
+      delay = this.delay >= 200 && this.delay <= 1000 ? this.delay : 300
       this.fn = this.__Throttle(this._initWheel, delay)
       delay = null
     }
@@ -71,7 +69,6 @@ export default {
   mounted () {
     this.$nextTick(() => {
       // 组件加载完毕则触发页面监听
-      this.currentWidth()
       this.isAgent()
       this._initFixed()
     })
@@ -80,28 +77,39 @@ export default {
   beforeMount () {},
   beforeUpdate () {},
   updated () {
+    this.currentWidth()
     this._initFixed()
   },
   beforeDestroy () {},
-  destroyed () {},
+  destroyed () {
+    this.fn = null
+  },
   activated () {},
   methods: {
     /**
      * 辅助函数
      */
     _map () {
+      var el = this.$el
       if (this.fixed) {
         this._initWheel()
-        var el = this.$el
         this.Width = el.clientWidth
         this.offsetLeft = this.$refs.bar.$el.offsetLeft
+        var scroll = this.$refs.bar.$el.getElementsByClassName(
+          'is-horizontal'
+        )[0].children[0]
+        var realWidth = (this.Width / this.contentWidth) * 100
+        if (realWidth < 100) {
+          // 当实际宽度不需要显示滚动条则不会显示滚动条
+          scroll.style.width = `${realWidth}%`
+        } else {
+          scroll.style.width = ``
+        }
+        this._resetStyle()
+        scroll = null
       }
-      var scroll = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
-        .children[0]
-      scroll.style.width = `${(this.Width / (this.contentWidth + 4)) * 100}%`
-      this._resetStyle()
+      this.isScrollBar = this.contentWidth > el.clientWidth
       el = null
-      scroll = null
     },
     /**
      * 计算表格内容实际宽度,判断时候需要显示滚动条(由fit-content属性控制)
