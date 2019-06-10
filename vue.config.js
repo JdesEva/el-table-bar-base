@@ -18,20 +18,18 @@ module.exports = {
   // use the full build with in-browser compiler?
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: () => {}, //  将接收ChainableConfig由webpack-chain提供支持的实例的函数。
-  configureWebpack: config => { },
+  configureWebpack: config => {},
   // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
   // css相关配置
   css: {
-  // 是否使用css分离插件 ExtractTextPlugin
+    // 是否使用css分离插件 ExtractTextPlugin
     extract: true,
     // 开启 CSS source maps?
     sourceMap: false,
     // css预设器配置项
     loaderOptions: {
-      css: {
-
-      }
+      css: {}
     },
     // 启用 CSS modules for all css / pre-processor files.
     modules: false
@@ -53,7 +51,5 @@ module.exports = {
     proxy: false
   },
   // 第三方插件配置
-  pluginOptions: {
-
-  }
+  pluginOptions: {}
 }

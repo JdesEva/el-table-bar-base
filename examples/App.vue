@@ -2,7 +2,7 @@
   <div id="app">
     <el-row :gutter="20" type="flex">
       <el-col :span="4">左侧占位</el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-table-bar fixed>
           <el-table :data="idata" stripe border>
             <el-table-column show-overflow-tooltip label="地址" prop="address"/>

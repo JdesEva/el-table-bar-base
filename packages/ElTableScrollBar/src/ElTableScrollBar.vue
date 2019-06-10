@@ -24,23 +24,22 @@ export default {
     fixed: {
       // 滚动条适应屏幕滚动，开启此项,则长表格（超出一屏幕）滚动条会默认出现在窗口底部，当表格底部出现在窗口视野，滚动条会复位到表格底部
       type: Boolean,
-      default: function () {
-        return false
-      }
+      default: false
     },
     bottom: {
       // 开启滚动条自适应之后,自适应滚动条距离窗口底部的距离,默认15
       type: Number,
-      default: function () {
-        return 15
-      }
+      default: 15
     },
     delay: {
       // 滚轮响应延迟,默认300毫秒，建议不做改动，最小值200,最大值1000
       type: Number,
-      default: function () {
-        return 300
-      }
+      default: 300
+    },
+    static: {
+      // 静态表格请开启此项.此props表示是否初始化时计算滚动条，异步获取的表格数据的表格建议保持默认，以节约性能。当表格初始化滚动条错误时，可以考虑打开此项以尝试自我修复
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -72,6 +71,7 @@ export default {
       // 组件加载完毕则触发页面监听
       this.isAgent()
       this._initFixed()
+      if (this.static) this.currentWidth()
     })
   },
   beforeCreate () {},
@@ -106,6 +106,7 @@ export default {
         } else {
           scroll.style.width = ``
         }
+        // console.log(this)
         this._resetStyle()
         scroll = null
       }
@@ -191,7 +192,7 @@ export default {
       )[0]
       if (this.fixed) {
         if (this.isBottom) {
-          el.style.width = `${this.Width}px`
+          el.style.width = `${this.Width - 5}px`
           el.style.position = `fixed`
           el.style.left = `${this.offsetLeft}px`
           el.style.bottom = `${this.bottom}px`
