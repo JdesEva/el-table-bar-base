@@ -2,7 +2,7 @@
   <div class="elTableBar" @mouseenter="_map" @mousewheel="fn">
     <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
       <div
-        :style="`width:${!isScrollBar ? '100%' : (!isRep ? 'fit-content' : contentWidth + 'px')}`"
+        :style="`width:${!isScrollBar ? '100%' : (!isRep ? this.firefox ? '-moz-fit-content' : 'fit-content' : contentWidth + 'px')}`"
       >
         <slot/>
       </div>
@@ -46,6 +46,7 @@ export default {
   data () {
     return {
       isScrollBar: false, // 控制width 是否为 fit-content (true -> 开启滚动条)
+      firefox: false, // 是否为火狐
       isRep: false, // 是否需要兼容
       contentWidth: 0, // 实际宽度
       fn: () => {}, // 辅助函数
@@ -125,16 +126,13 @@ export default {
       }
     },
     /**
-     * 检测浏览器是否为IE,Edge,FireFox
+     * 检测浏览器是否为IE,Edge
      * 如果是,则进行兼容性处理(修改属性,进行兼容性处理)
      */
     isAgent () {
       var userAgent = window.navigator.userAgent.toLowerCase()
-      if (
-        userAgent.indexOf('trident') > -1 ||
-        userAgent.indexOf('edge') > -1 ||
-        userAgent.indexOf('firefox') > -1
-      ) {
+      if (userAgent.indexOf('firefox') > -1) this.firefox = true // 判断是否是火狐，是则需要增加 -moz- 前缀
+      if (userAgent.indexOf('trident') > -1 || userAgent.indexOf('edge') > -1) {
         this.isRep = true
       }
       userAgent = null
