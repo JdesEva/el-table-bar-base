@@ -94,8 +94,8 @@ export default {
       var el = this.$el
       if (this.fixed) {
         this._initWheel()
-        this.Width = el.clientWidth
-        this.offsetLeft = this.$refs.bar.$el.offsetLeft
+        this.Width = el.getBoundingClientRect().width
+        this.offsetLeft = this.$refs.bar.$el.getBoundingClientRect().left
         var scroll = this.$refs.bar.$el.getElementsByClassName(
           'is-horizontal'
         )[0].children[0]
@@ -110,7 +110,7 @@ export default {
         this._resetStyle()
         scroll = null
       }
-      this.isScrollBar = this.contentWidth > el.clientWidth
+      this.isScrollBar = this.contentWidth > el.getBoundingClientRect().width
       el = null
     },
     /**
@@ -118,10 +118,11 @@ export default {
      */
     currentWidth () {
       try {
-        this.contentWidth = this.$slots.default[0].elm.getElementsByClassName(
-          'el-table__header'
-        )[0].offsetWidth
-        this.isScrollBar = this.contentWidth > this.$el.clientWidth
+        this.contentWidth = this.$slots.default[0].elm
+          .getElementsByClassName('el-table__header')[0]
+          .getBoundingClientRect().width
+        this.isScrollBar =
+          this.contentWidth > this.$el.getBoundingClientRect().width
       } catch (err) {
         throw new Error('The width is computed error!')
       }
@@ -192,7 +193,7 @@ export default {
       )[0]
       if (this.fixed) {
         if (this.isBottom) {
-          el.style.width = `${this.Width - 5}px`
+          el.style.width = `${this.Width}px`
           el.style.position = `fixed`
           el.style.left = `${this.offsetLeft}px`
           el.style.bottom = `${this.bottom}px`

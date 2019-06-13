@@ -9,7 +9,7 @@
 ```
 ## update Log
 
-# v2.0.3
+# v2.0.5
 
 修复 offsetLeft 在嵌套路由下出现的计算偏差
 使用 getBoundingClientRect 获取相应的距离参数
