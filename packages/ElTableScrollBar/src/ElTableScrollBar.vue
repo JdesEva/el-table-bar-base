@@ -159,10 +159,10 @@ export default {
     _initFixed () {
       if (this.fixed) {
         var el = this.$slots.default[0].elm
-        this.Width = el.clientWidth
-        this.offsetLeft = this.$refs.bar.$el.offsetLeft
-        this.offsetTop = el.offsetTop
-        this.Height = el.clientHeight
+        this.Width = el.getBoundingClientRect().width
+        this.offsetLeft = this.$refs.bar.$el.getBoundingClientRect().left
+        this.offsetTop = el.getBoundingClientRect().top
+        this.Height = el.getBoundingClientRect().height
         el = null
       }
     },
