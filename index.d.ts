@@ -7,14 +7,14 @@ declare class ElementUIComponent extends Vue {
 
 export declare class ElTableBar extends ElementUIComponent {
   /** 自适应模式 */
-  fixed: boolean
+  fixed?: boolean
 
   /** 滚动条底部距离 */
-  bottom: number
+  bottom?: number
 
   /** 滚轮响应延迟 */
-  delay: number
+  delay?: number
 
   /** 静态模式 */
-  static: boolean
+  static?: boolean
 }
