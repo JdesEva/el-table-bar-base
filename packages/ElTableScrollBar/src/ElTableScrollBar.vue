@@ -1,10 +1,10 @@
 <template>
-  <div class="elTableBar" @mouseenter="_map" @mousewheel="fn">
+  <div class="elTableBar" @mouseenter="__computedView" @mousewheel="fn">
     <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
       <div
         :style="`width:${!isScrollBar ? '100%' : (!isRep ? this.firefox ? '-moz-fit-content' : 'fit-content' : contentWidth + 'px')}`"
       >
-        <slot/>
+        <slot />
       </div>
     </el-scrollbar>
   </div>
@@ -90,7 +90,7 @@ export default {
     /**
      * 辅助函数
      */
-    _map () {
+    __computedView () {
       var el = this.$el
       if (this.fixed) {
         this._initWheel()
