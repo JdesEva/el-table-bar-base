@@ -6,33 +6,37 @@
 
 ## update Log
 
+### v2.0.9
+
+- 新增`native`属性，在设置表格`fixed`贴合情况下还原滚动条
+
 ### v2.0.7
 
-· 新增类型声明文件`.d.ts`
+- 新增类型声明文件`.d.ts`
 
 ### v2.0.6
 
-· 说明文档更新
+- 说明文档更新
 
 #### v2.0.5
 
-· 修复 `offsetLeft` 在嵌套路由下出现的计算偏差
+- 修复 `offsetLeft` 在嵌套路由下出现的计算偏差
 
-· 使用 `getBoundingClientRect` 获取相应的距离参数
+- 使用 `getBoundingClientRect` 获取相应的距离参数
 
-· 新增 `static` 模式
+- 新增 `static` 模式
 
 #### v2.0.3
 
-· 更新浏览器兼容性，修改 `Firefox` 兼容策略
+- 更新浏览器兼容性，修改 `Firefox` 兼容策略
 
 #### v2.0.2
 
-· 正式版本更新
+- 正式版本更新
 
-· 修复若干 bug
+- 修复若干 bug
 
-· 感谢 [suchenglin2017](https://github.com/suchenglin2017) 提供的新思路
+- 感谢 [suchenglin2017](https://github.com/suchenglin2017) 提供的新思路
 
 #### tips
 
@@ -42,12 +46,13 @@
 
 ### API
 
-| props  | type    | default | explain                           |
-| ------ | ------- | ------- | --------------------------------- |
-| fixed  | Boolean | false   | 开启滚动条自适应                  |
-| bottom | Number  | 15      | 滚动条自适应距离窗口底部距离      |
-| delay  | Number  | 300(ms) | 滚轮响应延迟                      |
-| static | Boolean | false   | 静态表格,有预设值的表格请设置此项 |
+| props  | type    | default | explain                                                                        |
+| ------ | ------- | ------- | ------------------------------------------------------------------------------ |
+| fixed  | Boolean | false   | 开启滚动条自适应                                                               |
+| bottom | Number  | 15      | 滚动条自适应距离窗口底部距离                                                   |
+| delay  | Number  | 300(ms) | 滚轮响应延迟                                                                   |
+| static | Boolean | false   | 静态表格,有预设值的表格请设置此项                                              |
+| native | Boolean | false   | 设置`elTableColumn`表格`fixed`属性必须设置此项还原滚动条，否则`fixed` 不会生效 |
 
 ### 示例&example
 
@@ -61,21 +66,25 @@
 
 ![image](examples/images/fixed2.png)
 
-### 安装&Install
+#### native
 
-You can use Yarn or NPM
+![image](examples/images/native.png)
+
+### 安装 - Install
+
+你可以使用 yarn 或者 npm
 
 ```shell
 yarn add el-table-bar-base
 ```
 
-OR
+or
 
 ```shell
 npm i el-table-bar-base
 ```
 
-### 用法&Usage
+### 用法 - Usage
 
 `main.js`
 
@@ -86,7 +95,7 @@ import 'el-table-bar-base/lib/ElTableBar.css'
 Vue.use(ElTableBar)
 ```
 
-### 模板语法&`Template`
+### 模板语法 - Template
 
 ```html
 <template>

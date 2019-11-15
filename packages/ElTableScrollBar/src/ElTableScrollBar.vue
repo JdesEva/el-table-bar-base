@@ -1,12 +1,32 @@
 <template>
-  <div class="elTableBar" @mouseenter="__computedView" @mousewheel="fn">
-    <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
-      <div
-        :style="`width:${!isScrollBar ? '100%' : (!isRep ? this.firefox ? '-moz-fit-content' : 'fit-content' : contentWidth + 'px')}`"
-      >
-        <slot />
-      </div>
-    </el-scrollbar>
+  <div>
+    <div
+      v-if="!native"
+      class="elTableBar"
+      @mouseenter="__computedView"
+      @mousewheel="fn"
+    >
+      <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
+        <div
+          :style="
+            `width:${
+              !isScrollBar
+                ? '100%'
+                : !isRep
+                ? this.firefox
+                  ? '-moz-fit-content'
+                  : 'fit-content'
+                : contentWidth + 'px'
+            }`
+          "
+        >
+          <slot />
+        </div>
+      </el-scrollbar>
+    </div>
+    <div v-else class="elTableBar-native">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -40,6 +60,11 @@ export default {
       // 静态表格请开启此项.此props表示是否初始化时计算滚动条，异步获取的表格数据的表格建议保持默认，以节约性能。当表格初始化滚动条错误时，可以考虑打开此项以尝试自我修复
       type: Boolean,
       default: false
+    },
+    native: {
+      // 如果表格列设置 fixed 属性，请开启此项还原滚动条。注意在此项情况下，其他任何设置均不生效
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -59,7 +84,7 @@ export default {
   computed: {},
   watch: {},
   created () {
-    if (this.fixed) {
+    if (this.fixed && this.native) {
       var delay
       delay = this.delay >= 200 && this.delay <= 1000 ? this.delay : 300
       this.fn = this.__Throttle(this._initWheel, delay)
@@ -69,17 +94,21 @@ export default {
   mounted () {
     this.$nextTick(() => {
       // 组件加载完毕则触发页面监听
-      this.isAgent()
-      this._initFixed()
-      if (this.static) this.currentWidth()
+      if (this.native) {
+        this.isAgent()
+        this._initFixed()
+        if (this.static) this.currentWidth()
+      }
     })
   },
   beforeCreate () {},
   beforeMount () {},
   beforeUpdate () {},
   updated () {
-    this.currentWidth()
-    this._initFixed()
+    if (this.native) {
+      this.currentWidth()
+      this._initFixed()
+    }
   },
   beforeDestroy () {},
   destroyed () {

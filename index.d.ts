@@ -17,4 +17,7 @@ export declare class ElTableBar extends ElementUIComponent {
 
   /** 静态模式 */
   static?: boolean
+
+  /** fixed 还原滚动条 */
+  native?: boolean
 }
