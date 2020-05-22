@@ -2,11 +2,16 @@
   <div>
     <div
       v-if="!native"
+      ref="dRef"
       class="elTableBar"
       @mouseenter="__computedView"
       @mousewheel="fn"
     >
-      <el-scrollbar ref="bar" :noresize="fixed" wrap-class="scrollbar-wrapper">
+      <el-scrollbar
+        ref="barRef"
+        :noresize="fixed"
+        wrap-class="scrollbar-wrapper"
+      >
         <div
           :style="
             `width:${
@@ -94,7 +99,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       // 组件加载完毕则触发页面监听
-      if (this.native) {
+      if (!this.native) {
         this.isAgent()
         this._initFixed()
         if (this.static) this.currentWidth()
@@ -105,7 +110,7 @@ export default {
   beforeMount () {},
   beforeUpdate () {},
   updated () {
-    if (this.native) {
+    if (!this.native) {
       this.currentWidth()
       this._initFixed()
     }
@@ -124,8 +129,8 @@ export default {
       if (this.fixed) {
         this._initWheel()
         this.Width = el.getBoundingClientRect().width
-        this.offsetLeft = this.$refs.bar.$el.getBoundingClientRect().left
-        var scroll = this.$refs.bar.$el.getElementsByClassName(
+        this.offsetLeft = this.$mount(this.$refs.barRef).$el.getBoundingClientRect().left
+        var scroll = this.$mount(this.$refs.barRef).$el.getElementsByClassName(
           'is-horizontal'
         )[0].children[0]
         var realWidth = (this.Width / this.contentWidth) * 100
@@ -133,28 +138,27 @@ export default {
           // 当实际宽度不需要显示滚动条则不会显示滚动条
           scroll.style.width = `${realWidth}%`
         } else {
-          scroll.style.width = ``
+          scroll.style.width = ''
         }
         // console.log(this)
         this._resetStyle()
         scroll = null
       }
       this.isScrollBar = this.contentWidth > el.getBoundingClientRect().width
+      // console.log(this.isRep)
       el = null
     },
     /**
      * 计算表格内容实际宽度,判断时候需要显示滚动条(由fit-content属性控制)
      */
     currentWidth () {
-      try {
+      this.$nextTick(() => {
         this.contentWidth = this.$slots.default[0].elm
           .getElementsByClassName('el-table__header')[0]
           .getBoundingClientRect().width
         this.isScrollBar =
           this.contentWidth > this.$el.getBoundingClientRect().width
-      } catch (err) {
-        throw new Error('The width is computed error!')
-      }
+      })
     },
     /**
      * 检测浏览器是否为IE,Edge
@@ -163,26 +167,12 @@ export default {
     isAgent () {
       var userAgent = window.navigator.userAgent.toLowerCase()
       if (userAgent.indexOf('firefox') > -1) this.firefox = true // 判断是否是火狐，是则需要增加 -moz- 前缀
-      if (userAgent.indexOf('trident') > -1 || userAgent.indexOf('edge') > -1) {
+      console.log(userAgent)
+      if (userAgent.indexOf('trident') > -1 || userAgent.indexOf('windows nt') > -1) {
         this.isRep = true
       }
       userAgent = null
     },
-    /**
-     * 当窗口第一次缩小时(特指通过最大化按钮最大化变为正常状态，即不是手动拖拽改变窗口大小的情况)
-     * el-scrollbar滚动条并不会计算真实宽度所占比，需要手动计算
-     */
-    // _initWidth () {
-    //   var el = this.$refs.bar.$el.getElementsByClassName('is-horizontal')[0]
-    //     .children[0]
-    //   var realWidth = (this.$el.offsetWidth / (this.contentWidth + 1)) * 100
-    //   if (el.offsetWidth === 0 && realWidth < 100) {
-    //     el.style.width = `${realWidth}%`
-    //   } else if (realWidth >= 100) {
-    //     el.style.width = 0
-    //   }
-    //   el = null
-    // },
     /**
      * 计算相关参数，开启fixed
      */
@@ -190,7 +180,7 @@ export default {
       if (this.fixed) {
         var el = this.$slots.default[0].elm
         this.Width = el.getBoundingClientRect().width
-        this.offsetLeft = this.$refs.bar.$el.getBoundingClientRect().left
+        this.offsetLeft = this.$mount(this.$refs.barRef).$el.getBoundingClientRect().left
         this.offsetTop = el.getBoundingClientRect().top
         this.Height = el.getBoundingClientRect().height
         el = null
@@ -203,12 +193,6 @@ export default {
       var window = this.getClientHeight() // 可视区域高度
       var scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop // 滚动条高度
-      // console.log(
-      //   window + scrollTop,
-      //   this.offsetTop + this.Height,
-      //   window + scrollTop < this.offsetTop + this.Height,
-      //   new Date()
-      // )
       this.isBottom =
         (window + scrollTop) * 0.992 < this.offsetTop + this.Height // 0.995 粘滞系数
       this._resetStyle()
@@ -217,7 +201,7 @@ export default {
      * 修改属性
      */
     _resetStyle () {
-      var el = this.$refs.bar.$el.getElementsByClassName(
+      var el = this.$mount(this.$refs.barRef).$el.getElementsByClassName(
         'el-scrollbar__bar is-horizontal'
       )[0]
       if (this.fixed) {
@@ -226,6 +210,7 @@ export default {
           el.style.position = `fixed`
           el.style.left = `${this.offsetLeft}px`
           el.style.bottom = `${this.bottom}px`
+          el.style['z-index'] = 100
         } else {
           el.style.width = ``
           el.style.position = ``
@@ -234,7 +219,6 @@ export default {
         }
       }
       el = null
-      // console.log(el, this.fixed, this.isBottom)
     },
     /**
      * 获取窗口可视区域高度

@@ -9,11 +9,11 @@
               show-overflow-tooltip
               label="地址"
               prop="address"
+              fixed="left"
             />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
             <el-table-column
-              fixed="left"
               show-overflow-tooltip
               label="地址"
               prop="address"
@@ -32,7 +32,6 @@
             />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column
-              fixed="right"
               show-overflow-tooltip
               label="日期"
               prop="date"
@@ -42,7 +41,7 @@
       </el-col>
       <el-col :span="8">
         <span>如果没有出现横向滚动条，请尝试缩小窗口大小观看例子</span>
-        <el-table-bar>
+        <el-table-bar fixed>
           <el-table :data="idata" stripe border>
             <el-table-column
               show-overflow-tooltip
