@@ -20,4 +20,6 @@ export declare class ElTableBar extends ElementUIComponent {
 
   /** fixed 还原滚动条 */
   native?: boolean
+
+  height?: number | string
 }

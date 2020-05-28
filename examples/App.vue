@@ -5,37 +5,15 @@
       <el-col :span="8">
         <el-table-bar fixed native>
           <el-table :data="idata" stripe border>
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-              fixed="left"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" fixed="left" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-            />
-            <el-table-column
-              fixed
-              show-overflow-tooltip
-              label="姓名"
-              prop="name"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
+            <el-table-column fixed show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
-            <el-table-column
-              show-overflow-tooltip
-              label="日期"
-              prop="date"
-            />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
           </el-table>
         </el-table-bar>
       </el-col>
@@ -43,33 +21,37 @@
         <span>如果没有出现横向滚动条，请尝试缩小窗口大小观看例子</span>
         <el-table-bar fixed>
           <el-table :data="idata" stripe border>
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
-            <el-table-column
-              show-overflow-tooltip
-              label="地址"
-              prop="address"
-            />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
           </el-table>
         </el-table-bar>
       </el-col>
     </el-row>
+    <br>
+    <br>
     <el-row>
-      <el-col>占位</el-col>
+      <el-col style="height:400px;overflow:hidden;">
+        <el-table-bar height="400px">
+          <el-table :data="idata" stripe border>
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
+            <el-table-column show-overflow-tooltip label="姓名" prop="name" />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
+            <el-table-column show-overflow-tooltip label="姓名" prop="name" />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
+            <el-table-column show-overflow-tooltip label="姓名" prop="name" />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
+          </el-table>
+        </el-table-bar>
+      </el-col>
     </el-row>
     <el-row>
       <el-col>占位</el-col>

@@ -1,37 +1,31 @@
 <template>
-  <div>
-    <div
-      v-if="!native"
-      ref="dRef"
-      class="elTableBar"
-      @mouseenter="__computedView"
-      @mousewheel="fn"
-    >
-      <el-scrollbar
-        ref="barRef"
-        :noresize="fixed"
-        wrap-class="scrollbar-wrapper"
+  <div
+    v-if="!native"
+    ref="dRef"
+    class="elTableBar"
+    @mouseenter="__computedView"
+    @mousewheel="fn"
+  >
+    <el-scrollbar ref="barRef" :noresize="fixed" wrap-class="scrollbar-wrapper">
+      <div
+        :style="
+          `width:${
+            !isScrollBar
+              ? '100%'
+              : !isRep
+              ? this.firefox
+                ? '-moz-fit-content'
+                : 'fit-content'
+              : contentWidth + 'px'
+          }; height:${fixed ? 'auto' : typeof height === 'number' ? `${height}px` : height}`
+        "
       >
-        <div
-          :style="
-            `width:${
-              !isScrollBar
-                ? '100%'
-                : !isRep
-                ? this.firefox
-                  ? '-moz-fit-content'
-                  : 'fit-content'
-                : contentWidth + 'px'
-            }`
-          "
-        >
-          <slot />
-        </div>
-      </el-scrollbar>
-    </div>
-    <div v-else class="elTableBar-native">
-      <slot />
-    </div>
+        <slot />
+      </div>
+    </el-scrollbar>
+  </div>
+  <div v-else class="elTableBar-native">
+    <slot />
   </div>
 </template>
 
@@ -70,6 +64,15 @@ export default {
       // 如果表格列设置 fixed 属性，请开启此项还原滚动条。注意在此项情况下，其他任何设置均不生效
       type: Boolean,
       default: false
+    },
+    height: {
+      // 设置页面高度以保证启用纵向滚动条，当开启fixed模式，该属性会被丢弃
+      type: [Number, String],
+      default: () => 'auto',
+      validator: v => {
+        let regx = /\b\d+\b|\d+px\b|\b\d{1,2}vh\b|auto/
+        return regx.test(v)
+      }
     }
   },
   data () {
@@ -129,7 +132,9 @@ export default {
       if (this.fixed) {
         this._initWheel()
         this.Width = el.getBoundingClientRect().width
-        this.offsetLeft = this.$mount(this.$refs.barRef).$el.getBoundingClientRect().left
+        this.offsetLeft = this.$mount(
+          this.$refs.barRef
+        ).$el.getBoundingClientRect().left
         var scroll = this.$mount(this.$refs.barRef).$el.getElementsByClassName(
           'is-horizontal'
         )[0].children[0]
@@ -167,8 +172,11 @@ export default {
     isAgent () {
       var userAgent = window.navigator.userAgent.toLowerCase()
       if (userAgent.indexOf('firefox') > -1) this.firefox = true // 判断是否是火狐，是则需要增加 -moz- 前缀
-      console.log(userAgent)
-      if (userAgent.indexOf('trident') > -1 || userAgent.indexOf('windows nt') > -1) {
+      // console.log(userAgent)
+      if (
+        userAgent.indexOf('trident') > -1 ||
+        userAgent.indexOf('windows nt') > -1
+      ) {
         this.isRep = true
       }
       userAgent = null
@@ -180,7 +188,9 @@ export default {
       if (this.fixed) {
         var el = this.$slots.default[0].elm
         this.Width = el.getBoundingClientRect().width
-        this.offsetLeft = this.$mount(this.$refs.barRef).$el.getBoundingClientRect().left
+        this.offsetLeft = this.$mount(
+          this.$refs.barRef
+        ).$el.getBoundingClientRect().left
         this.offsetTop = el.getBoundingClientRect().top
         this.Height = el.getBoundingClientRect().height
         el = null

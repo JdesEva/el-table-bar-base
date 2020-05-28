@@ -6,6 +6,11 @@
 
 ## update Log
 
+
+### v2.1.1
+
+- 提供纵向滚动功能，开启此功能传入`height`属性即可。具体见API列表
+
 ### v2.1.0
 
 - 修复IE11 无法使用的bug
@@ -57,6 +62,7 @@
 | delay  | Number  | 300(ms) | 滚轮响应延迟                                                                   |
 | static | Boolean | false   | 静态表格,有预设值的表格请设置此项                                              |
 | native | Boolean | false   | 设置`elTableColumn`表格`fixed`属性必须设置此项还原滚动条，否则`fixed` 不会生效 |
+| height | Number、String | auto | 开启纵向滚动功能，数字输入则默认单位`px`。此功能与fixed模式冲突，开启fixed模式则会丢弃该参数  |
 
 ### 示例&example
 
@@ -73,6 +79,10 @@
 #### native
 
 ![image](examples/images/native.png)
+
+### scrollY
+
+![image](examples/images/y-scroll.png)
 
 ### 安装 - Install
 
