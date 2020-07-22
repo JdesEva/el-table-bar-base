@@ -1,11 +1,5 @@
 <template>
-  <div
-    v-if="!native"
-    ref="dRef"
-    class="elTableBar"
-    @mouseenter="__computedView"
-    @mousewheel="fn"
-  >
+  <div v-if="!native" ref="dRef" class="elTableBar" @mouseenter="__computedView" @mousewheel="fn">
     <el-scrollbar ref="barRef" :noresize="fixed" wrap-class="scrollbar-wrapper">
       <div
         :style="
@@ -17,7 +11,9 @@
                 ? '-moz-fit-content'
                 : 'fit-content'
               : contentWidth + 'px'
-          }; height:${fixed ? 'auto' : typeof height === 'number' ? `${height}px` : height}`
+          }; height:${
+            fixed ? 'auto' : typeof height === 'number' ? `${height}px` : height
+          }`
         "
       >
         <slot />
@@ -139,7 +135,7 @@ export default {
           'is-horizontal'
         )[0].children[0]
         var realWidth = (this.Width / this.contentWidth) * 100
-        if (realWidth < 100) {
+        if (realWidth < 98) {
           // 当实际宽度不需要显示滚动条则不会显示滚动条
           scroll.style.width = `${realWidth}%`
         } else {
@@ -149,7 +145,8 @@ export default {
         this._resetStyle()
         scroll = null
       }
-      this.isScrollBar = this.contentWidth > el.getBoundingClientRect().width
+      this.isScrollBar =
+        this.contentWidth * 0.99 > el.getBoundingClientRect().width
       // console.log(this.isRep)
       el = null
     },
@@ -162,7 +159,7 @@ export default {
           .getElementsByClassName('el-table__header')[0]
           .getBoundingClientRect().width
         this.isScrollBar =
-          this.contentWidth > this.$el.getBoundingClientRect().width
+          this.contentWidth * 0.99 > this.$el.getBoundingClientRect().width
       })
     },
     /**

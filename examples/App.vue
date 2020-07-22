@@ -49,6 +49,10 @@
             <el-table-column show-overflow-tooltip label="地址" prop="address" />
             <el-table-column show-overflow-tooltip label="姓名" prop="name" />
             <el-table-column show-overflow-tooltip label="日期" prop="date" />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
+            <el-table-column show-overflow-tooltip label="地址" prop="address" />
+            <el-table-column show-overflow-tooltip label="姓名" prop="name" />
+            <el-table-column show-overflow-tooltip label="日期" prop="date" />
           </el-table>
         </el-table-bar>
       </el-col>
