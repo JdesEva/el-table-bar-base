@@ -1,6 +1,6 @@
 {
   "name": "el-table-bar-base",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "element-ui": "^2.9.1",
     "vue": "^2.6.6"
   },
   "devDependencies": {
@@ -24,6 +23,7 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-component": "^1.1.1",
     "babel-preset-env": "^1.7.0",
+    "element-ui": "^2.13.2",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.5.21"
