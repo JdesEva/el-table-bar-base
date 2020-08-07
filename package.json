@@ -29,7 +29,7 @@
     "vue-template-compiler": "^2.5.21"
   },
   "description": "scrollbar of element-ui el-table",
-  "main": "lib/ElTableBar.common.js",
+  "main": "lib/ElTableBar.umd.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JdesHZ/el-table-bar.git"
