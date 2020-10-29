@@ -6,18 +6,21 @@
 
 ## update Log
 
+### v2.1.5
+
+- 示例更新，文档说明更新
 
 ### v2.1.3
 
-- 修复表格宽度足够的情况下仍然会出现横向滚动条的bug
+- 修复表格宽度足够的情况下仍然会出现横向滚动条的 bug
 
 ### v2.1.2
 
-- 提供纵向滚动功能，开启此功能传入`height`属性即可。具体见API列表
+- 提供纵向滚动功能，开启此功能传入`height`属性即可。具体见 API 列表
 
 ### v2.1.0
 
-- 修复IE11 无法使用的bug
+- 修复 IE11 无法使用的 bug
 
 ### v2.0.9
 
@@ -59,14 +62,14 @@
 
 ### API
 
-| props  | type    | default | explain                                                                        |
-| ------ | ------- | ------- | ------------------------------------------------------------------------------ |
-| fixed  | Boolean | false   | 开启滚动条自适应                                                               |
-| bottom | Number  | 15      | 滚动条自适应距离窗口底部距离                                                   |
-| delay  | Number  | 300(ms) | 滚轮响应延迟                                                                   |
-| static | Boolean | false   | 静态表格,有预设值的表格请设置此项                                              |
-| native | Boolean | false   | 设置`elTableColumn`表格`fixed`属性必须设置此项还原滚动条，否则`fixed` 不会生效 |
-| height | Number、String | auto | 开启纵向滚动功能，数字输入则默认单位`px`。此功能与fixed模式冲突，开启fixed模式则会丢弃该参数  |
+| props  | type           | default | explain                                                                                          |
+| ------ | -------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| fixed  | Boolean        | false   | 开启滚动条自适应                                                                                 |
+| bottom | Number         | 15      | 滚动条自适应距离窗口底部距离                                                                     |
+| delay  | Number         | 300(ms) | 滚轮响应延迟                                                                                     |
+| static | Boolean        | false   | 静态表格,有预设值的表格请设置此项                                                                |
+| native | Boolean        | false   | 设置`elTableColumn`表格`fixed`属性必须设置此项还原滚动条，否则`fixed` 不会生效                   |
+| height | Number、String | auto    | 开启纵向滚动功能，数字输入则默认单位`px`。此功能与 fixed 模式冲突，开启 fixed 模式则会丢弃该参数 |
 
 ### 示例&example
 
@@ -107,9 +110,13 @@ npm i el-table-bar-base
 `main.js`
 
 ```js
+import Vue from 'vue'
 import ElTableBar from 'el-table-bar-base'
 import 'el-table-bar-base/lib/ElTableBar.css'
 
+import { Scrollbar } from 'element-ui' // 必须引入 Scrollbar 组件才能正常使用
+
+Vue.use(Scrollbar)
 Vue.use(ElTableBar)
 ```
 

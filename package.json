@@ -1,6 +1,6 @@
 {
   "name": "el-table-bar-base",
-  "version": "2.1.4",
+  "version": "2.1.6",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -30,23 +30,22 @@
   },
   "description": "scrollbar of element-ui el-table",
   "main": "lib/ElTableBar.umd.min.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JdesHZ/el-table-bar.git"
-  },
-  "author": "Jdeshz",
+  "repository": "git+https://github.com/JdesEva/el-table-bar.git",
+  "author": "Jdeseva",
   "license": "MIT",
   "keywords": [
     "element-ui",
     "el-table",
-    "el-scrollbar"
+    "el-scrollbar",
+    "滚动条"
   ],
   "bugs": {
-    "url": "https://github.com/JdesHZ/el-table-bar/issues"
+    "url": "https://github.com/JdesEva/el-table-bar/issues"
   },
-  "homepage": "https://github.com/JdesHZ/el-table-bar#readme",
+  "homepage": "https://github.com/JdesEva/el-table-bar#readme",
   "directories": {
     "example": "examples",
     "lib": "lib"
-  }
+  },
+  "typings": "index.d.ts"
 }

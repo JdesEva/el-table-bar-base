@@ -79,7 +79,7 @@
       <el-col :span="4">左侧占位</el-col>
       <el-col :span="8">
         <el-table-bar fixed>
-          <el-table :data="vdata" stripe border>
+          <el-table style="width: 100%" :data="vdata" stripe border>
             <el-table-column
               show-overflow-tooltip
               label="地址"
@@ -234,7 +234,7 @@ export default {
   },
   methods: {
     _initTableList () {
-      this.vdata = []
+      // this.vdata = []
       this.$nextTick(() => {
         setTimeout(() => {
           this.vdata = [...this.data]
