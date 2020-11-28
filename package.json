@@ -1,6 +1,6 @@
 {
   "name": "el-table-bar-base",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",

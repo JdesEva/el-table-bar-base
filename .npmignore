@@ -3,6 +3,12 @@ node_modules/
 examples/
 packages/
 public/
+.env.production
+.prettierrc.json
+postcss.config.js
+.browserslistrc
+.editorconfig
+yarn.lock
 vue.config.js
 babel.config.js
 *.map
