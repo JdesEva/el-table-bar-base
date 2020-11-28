@@ -79,7 +79,7 @@
       <el-col :span="4">左侧占位</el-col>
       <el-col :span="8">
         <el-table-bar fixed>
-          <el-table style="width: 100%" :data="vdata" stripe border>
+          <el-table style="width: 100%; border-radius: 5px;" highlight-current-row :row-style="{ height: 0 }" :data="vdata" stripe border @cell-click="visibile = true">
             <el-table-column
               show-overflow-tooltip
               label="地址"
@@ -92,8 +92,8 @@
               label="地址"
               prop="address"
             />
-            <el-table-column show-overflow-tooltip label="姓名" prop="name" />
-            <el-table-column show-overflow-tooltip label="日期" prop="date" />
+            <el-table-column  show-overflow-tooltip label="姓名" prop="name" />
+            <el-table-column sortable show-overflow-tooltip label="日期" prop="date" />
             <el-table-column
               show-overflow-tooltip
               label="地址"
@@ -113,6 +113,9 @@
         />
       </el-col>
     </el-row>
+    <el-dialog :visible.sync="visibile">
+      13123123123
+    </el-dialog>
   </div>
 </template>
 
@@ -126,6 +129,7 @@ export default {
       vdata: [],
       currpage: 1,
       total: 100,
+      visibile: false,
       data: [
         {
           date: '2016-05-02',
