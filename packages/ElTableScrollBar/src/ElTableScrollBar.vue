@@ -82,7 +82,8 @@ export default {
       Height: null, // 宽
       Width: null, // 高
       offsetLeft: null, // 左侧距离
-      isBottom: false // 是否到底
+      isBottom: false, // 是否到底
+      timer: null
     }
   },
   computed: {},
@@ -114,7 +115,9 @@ export default {
       this._initFixed()
     }
   },
-  beforeDestroy () {},
+  beforeDestroy () {
+    this.timer && clearTimeout(this.timer)
+  },
   destroyed () {
     this.fn = null
   },
@@ -147,20 +150,21 @@ export default {
       }
       this.isScrollBar =
         this.contentWidth * 0.99 > el.getBoundingClientRect().width
-      // console.log(this.isRep)
       el = null
     },
     /**
      * 计算表格内容实际宽度,判断时候需要显示滚动条(由fit-content属性控制)
      */
     currentWidth () {
-      this.$nextTick(() => {
+      this.timer = setTimeout(() => {
         this.contentWidth = this.$slots.default[0].elm
           .getElementsByClassName('el-table__header')[0]
           .getBoundingClientRect().width
         this.isScrollBar =
           this.contentWidth * 0.99 > this.$el.getBoundingClientRect().width
-      })
+        this.timer && clearTimeout(this.timer)
+        this.timer = null
+      }, 100)
     },
     /**
      * 检测浏览器是否为IE,Edge
